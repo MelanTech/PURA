@@ -99,13 +99,14 @@ We use the implementation of the SVD decomposition from the [PGrad](https://gith
 
 ## Citation
 
-If our method is helpful for your research, please consider citing our paper:
+If our work is helpful for your research, please consider citing our paper:
 
 ```bibtex
- @inproceedings{shao2025pura,
+@inproceedings{shao2025pura,
     title={PURA: Parameter Update-Recovery Test-Time Adaption for RGB-T Tracking},
-    author={Zekai, Shao and Yufan, Hu and Bin, Fan and Hongmin, Liu},
-    booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+    author={Shao, Zekai and Hu, Yufan and Fan, Bin and Liu, Hongmin},
+    booktitle={Proceedings of the Computer Vision and Pattern Recognition Conference},
+    pages={22089--22098},
     year={2025}
-    }
+}
 ```
