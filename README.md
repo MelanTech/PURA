@@ -72,7 +72,9 @@ For applying PURA to your own RGB-T tracker based on [pytracking](https://github
 
 ```python
 from lib.test.tracker import pura  # import PURA
-
+from lib.test.tracker import teny  # import Tent
+from lib.test.tracker import eata  # import EATA
+from lib.test.tracker import adabn  # import AdaBN
 ...
 
 
@@ -85,12 +87,46 @@ class XXXTrack(BaseTracker):
         self.network = network.cuda()
         self.network.eval()
 
+        # PURA
         pura.replace_batchnorm(self.network.box_head)  # replace batchnorm in box_head with PURA
         self.network = pura.configure_model(self.network)  # configure model
+        
+        # Tent
+        # model = tent.configure_model(self.network)
+        # tta_params, tta_param_names = tent.collect_params(model.box_head)
+        # optimizer = torch.optim.AdamW(tta_params, lr=1e-3)
+        # self.model = tent.Tent(model, optimizer)
+        
+        # ETA
+        # model = eata.configure_model(self.network)
+        # tta_params, tta_param_names = eata.collect_params(model.box_head)
+        # optimizer = torch.optim.SGD(tta_params, lr=0.00025, momentum=0.9)
+        # self.model = eata.EATA(model, optimizer, e_margin=math.log(1000)*0.40, d_margin=0.05)
+        
+        # AdaBN
+        # adabn.replace_batchnorm(self.network.box_head)
+        # self.network = adabn.configure_model(self.network)
 
         self.preprocessor = Preprocessor()
         self.state = None
         ...
+```
+3. If `Tent` or `ETA` is enabled, please build the data as a dictionary input model of the `track` function in `lib\test\tracker\xxx_track.py`:
+```python
+    def track(self, image, info: dict = None):
+        H, W, _ = image.shape
+        self.frame_id += 1
+        
+        ...
+
+        with torch.enable_grad():  # Don't forget to enable grad
+            model_inputs = {
+                "template": cur_template,
+                "search": [x_dict.tensors[:, :3, :, :], x_dict.tensors[:, 3:, :, :]],
+                "ce_template_mask": self.box_mask_z
+            }
+            
+            out_dict = self.model(model_inputs)
 ```
 
 ## Acknowledgments
