@@ -72,7 +72,7 @@ For applying PURA to your own RGB-T tracker based on [pytracking](https://github
 
 ```python
 from lib.test.tracker import pura  # import PURA
-from lib.test.tracker import teny  # import Tent
+from lib.test.tracker import tent  # import Tent
 from lib.test.tracker import eata  # import EATA
 from lib.test.tracker import adabn  # import AdaBN
 ...
