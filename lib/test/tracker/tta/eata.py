@@ -23,6 +23,7 @@ class EATA(nn.Module):
                  e_margin=math.log(1000) / 2 - 1, d_margin=0.05):
         super().__init__()
         self.model = model
+        self.box_head = model.box_head
         self.optimizer = optimizer
         self.steps = steps
         assert steps > 0, "EATA requires >= 1 step(s) to forward and update"

@@ -12,6 +12,7 @@ class Tent(nn.Module):
     def __init__(self, model, optimizer, steps=1, episodic=False):
         super().__init__()
         self.model = model
+        self.box_head = model.box_head
         self.optimizer = optimizer
         self.steps = steps
         assert steps > 0, "tent requires >= 1 step(s) to forward and update"
